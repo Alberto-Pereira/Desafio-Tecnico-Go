@@ -17,5 +17,7 @@ func SetupRouter() *gin.Engine {
 		accounts.POST("/", CreateAccount)
 	}
 
+	router.POST("/login", Login)
+
 	return router
 }
