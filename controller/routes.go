@@ -10,11 +10,11 @@ func SetupRouter() *gin.Engine {
 
 	accounts := router.Group("/accounts")
 	{
-		accounts.GET("/")
+		accounts.GET("/", ReadAccounts)
 
-		accounts.GET("/:account_id/balance")
+		accounts.GET("/:account_id/balance", ReadAccountBalance)
 
-		accounts.POST("/")
+		accounts.POST("/", CreateAccount)
 	}
 
 	return router

@@ -41,15 +41,20 @@ func ReadAccounts() ([]model.Account, error) {
 	return accounts, nil
 }
 
-func ReadAccountBalance(accountId int64, accountSecret string) (int64, error) {
+func ReadAccountBalance(accountId int) (int, error) {
 
 	db := StartDB()
 
-	sqlStatement := `SELECT balance FROM desafiotecnicoprincipal.accounts WHERE id=$1 AND secret=$2;`
+	sqlStatement := `SELECT id, balance FROM desafiotecnicoprincipal.accounts WHERE id=$1;`
 
-	var accountBalance int64
+	var accountBalance int
+	var accId int
 
-	err := db.QueryRow(sqlStatement, accountId, accountSecret).Scan(&accountBalance)
+	err := db.QueryRow(sqlStatement, accountId).Scan(&accId, &accountBalance)
+
+	if accountId != accId {
+		return 0, errors.New("This account doesn't exist!")
+	}
 
 	if err != nil {
 		return 0, errors.New("Error while try to retrieve balance from account!")
@@ -58,7 +63,7 @@ func ReadAccountBalance(accountId int64, accountSecret string) (int64, error) {
 	return accountBalance, nil
 }
 
-func CreateAccount(account model.Account) (int, error) {
+func CreateAccount(account model.Account) error {
 
 	db := StartDB()
 
@@ -70,8 +75,8 @@ func CreateAccount(account model.Account) (int, error) {
 	err := db.QueryRow(sqlStatement, account.Name, account.CPF, account.Secret, account.Balance, account.Created_at).Scan(&id)
 
 	if err != nil || id == 0 {
-		return 0, errors.New("Error while try to create account!")
+		return errors.New("Error while try to create account!")
 	}
 
-	return id, nil
+	return nil
 }

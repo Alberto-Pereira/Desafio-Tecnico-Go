@@ -21,9 +21,9 @@ func ReadAccounts() ([]model.Account, error) {
 	return accounts, nil
 }
 
-func ReadAccountBalance(accountId int64, accountSecret string) (int64, error) {
+func ReadAccountBalance(accountId int) (int, error) {
 
-	accountBalance, err := repository.ReadAccountBalance(accountId, accountSecret)
+	accountBalance, err := repository.ReadAccountBalance(accountId)
 
 	if err != nil {
 		return 0, err
@@ -32,29 +32,29 @@ func ReadAccountBalance(accountId int64, accountSecret string) (int64, error) {
 	return accountBalance, nil
 }
 
-func CreateAccount(account model.Account) (int, error) {
+func CreateAccount(account model.Account) error {
 
 	err := validateAccount(account)
 
 	if err != nil {
-		return 0, fmt.Errorf("Error validating account! %s", err.Error())
+		return fmt.Errorf("Error validating account! %s", err.Error())
 	}
 
 	hashSecret, err := hashAccountSecret(account.Secret)
 
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	id, err := repository.CreateAccount(model.Account{
+	err = repository.CreateAccount(model.Account{
 		Name: account.Name, CPF: account.CPF, Secret: hashSecret,
 		Balance: account.Balance, Created_at: account.Created_at})
 
 	if err != nil {
-		return 0, err
+		return err
 	}
 
-	return id, nil
+	return nil
 }
 
 func validateAccount(account model.Account) error {
@@ -63,6 +63,8 @@ func validateAccount(account model.Account) error {
 	validName := regexp.MustCompile(`^([A-Z]{1}[a-z]+\s?)+$`)
 	// ! Format - Accepts the following 000.000.000-00 pattern
 	validCPF := regexp.MustCompile("^[0-9]{3}[.][0-9]{3}[.][0-9]{3}[-][0-9]{2}$")
+	// ! Format - Matches anything other than a space, tab or newline
+	validSecret := regexp.MustCompile(`^\S+$`)
 
 	if !validName.MatchString(account.Name) {
 		return errors.New("Invalid account name!")
@@ -72,7 +74,7 @@ func validateAccount(account model.Account) error {
 		return errors.New("Invalid account cpf!")
 	}
 
-	if len(account.Secret) == 0 || account.Secret == " " {
+	if !validSecret.MatchString(account.Secret) {
 		return errors.New("Invalid account secret!")
 	}
 
@@ -80,7 +82,7 @@ func validateAccount(account model.Account) error {
 		return errors.New("Invalid account balance!")
 	}
 
-	if account.Created_at < 0 {
+	if account.Created_at <= 0 {
 		return errors.New("Invalid account created time!")
 	}
 

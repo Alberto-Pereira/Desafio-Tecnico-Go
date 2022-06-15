@@ -1,11 +1,12 @@
 package main
 
-import (
-	"desafio-tecnico/service"
-	"fmt"
-)
+import "desafio-tecnico/controller"
 
 func main() {
+
+	router := controller.SetupRouter()
+
+	router.Run()
 
 	// id, err := service.CreateAccount(model.Account{
 	// 	Name:       "Alberto",
@@ -21,11 +22,11 @@ func main() {
 
 	// fmt.Println(id)
 
-	accs, err := service.ReadAccounts()
+	// accs, err := service.ReadAccounts()
 
-	if err != nil {
-		fmt.Println(err.Error())
-	}
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
 
-	fmt.Println(accs)
+	// fmt.Println(accs)
 }
