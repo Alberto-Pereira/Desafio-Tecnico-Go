@@ -18,7 +18,7 @@ func GenerateToken(accountId int) (string, int, error) {
 
 	expirationTime := time.Now().Add(time.Minute * 5).Unix()
 
-	claims := &Claims{
+	claims := Claims{
 		AccountID: accountId,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expirationTime,
@@ -34,8 +34,17 @@ func GenerateToken(accountId int) (string, int, error) {
 	return signedToken, int(expirationTime), nil
 }
 
-func ValidateToken(token string) error {
+func ValidateToken(token string) (int, error) {
 
-	return nil
+	claims := &Claims{}
 
+	tkn, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (interface{}, error) {
+		return jwtKey, nil
+	})
+
+	if err != nil || !tkn.Valid {
+		return 0, errors.New("Invalid token!")
+	}
+
+	return claims.AccountID, nil
 }

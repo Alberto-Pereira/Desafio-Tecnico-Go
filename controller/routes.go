@@ -19,5 +19,11 @@ func SetupRouter() *gin.Engine {
 
 	router.POST("/login", Login)
 
+	transfers := router.Group("/transfers")
+	{
+		transfers.GET("/", ReadTransfers)
+		transfers.POST("/", CreateTransfer)
+	}
+
 	return router
 }

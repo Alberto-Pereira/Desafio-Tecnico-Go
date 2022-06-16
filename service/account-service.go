@@ -6,6 +6,7 @@ import (
 	"errors"
 	"fmt"
 	"regexp"
+	"time"
 
 	"golang.org/x/crypto/bcrypt"
 )
@@ -54,7 +55,7 @@ func CreateAccount(account model.Account) error {
 
 	err = repository.CreateAccount(model.Account{
 		Name: account.Name, CPF: account.CPF, Secret: hashSecret,
-		Balance: account.Balance, Created_at: account.Created_at})
+		Balance: account.Balance, Created_at: int(time.Now().Unix())})
 
 	if err != nil {
 		return err
@@ -86,10 +87,6 @@ func validateAccount(account model.Account) error {
 
 	if account.Balance < 0 {
 		return errors.New("Invalid account balance!")
-	}
-
-	if account.Created_at <= 0 {
-		return errors.New("Invalid account created time!")
 	}
 
 	return nil
