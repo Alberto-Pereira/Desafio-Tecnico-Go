@@ -1,5 +1,6 @@
 // Repository package contains repository operations
 // for account and transfer models
+// This file contains the configurations for the database
 package repository
 
 import (

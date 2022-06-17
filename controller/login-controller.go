@@ -1,3 +1,5 @@
+// Controller package contains controller operations
+// for account, login and transfer models
 package controller
 
 import (
@@ -8,6 +10,11 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+// Login
+// Receives a login through a request, bind in one login model,
+// search for an account that matches the login and generate a token
+// If the operation is successful, set the token in the cookie then returns one success code and message
+// If the operation fails, returns one failure code and message
 func Login(ctx *gin.Context) {
 
 	var login model.Login
