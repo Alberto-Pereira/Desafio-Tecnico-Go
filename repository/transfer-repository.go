@@ -40,7 +40,6 @@ func ReadTransfers(accountId int) ([]model.Transfer, error) {
 	var transfers []model.Transfer
 
 	for rows.Next() {
-
 		err := rows.Scan(&transfer.ID, &transfer.Account_origin_id, &transfer.Account_destination_id,
 			&transfer.Amount, &transfer.Created_at)
 		if err != nil {

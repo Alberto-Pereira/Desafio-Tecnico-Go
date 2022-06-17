@@ -15,7 +15,6 @@ func CreateAccount(account model.Account) error {
 	var accId int
 
 	err := db.QueryRow(sqlStatement, account.Name, account.CPF, account.Secret, account.Balance, account.Created_at).Scan(&accId)
-
 	if err != nil || accId == 0 {
 		return errors.New("Error while try to create account!")
 	}
@@ -33,7 +32,6 @@ func ReadAccount(accountCpf string) (int, string, error) {
 	var accSecret string
 
 	err := db.QueryRow(sqlStatement, accountCpf).Scan(&accId, &accSecret)
-
 	if err != nil || accId == 0 {
 		return 0, "", errors.New("Invalid account cpf!")
 	}
@@ -66,7 +64,6 @@ func ReadAccountCpf(accountCpf string) (bool, error) {
 	var accCpf string
 
 	err := db.QueryRow(sqlStatement, accountCpf).Scan(&accCpf)
-
 	if err != nil && accCpf != "" {
 		return false, errors.New("Error while try to search for account cpf!")
 	}
@@ -88,7 +85,6 @@ func ReadAccountBalance(accountId int) (int, error) {
 	var accId int
 
 	err := db.QueryRow(sqlStatement, accountId).Scan(&accId, &accountBalance)
-
 	if accountId != accId {
 		return 0, errors.New("This account doesn't exist!")
 	}
@@ -108,7 +104,6 @@ func ReadAccounts() ([]model.Account, error) {
 						FROM desafiotecnicoprincipal.accounts;`
 
 	rows, err := db.Query(sqlStatement)
-
 	if err != nil {
 		return nil, errors.New("Error while try to read accounts!")
 	}
@@ -117,9 +112,7 @@ func ReadAccounts() ([]model.Account, error) {
 	var accounts []model.Account
 
 	for rows.Next() {
-
 		err := rows.Scan(&account.ID, &account.Name, &account.CPF, &account.Secret, &account.Balance, &account.Created_at)
-
 		if err != nil {
 			return nil, errors.New("Error while try to scan a row of accounts!")
 		}
@@ -128,7 +121,6 @@ func ReadAccounts() ([]model.Account, error) {
 	}
 
 	err = rows.Err()
-
 	if err != nil {
 		return nil, errors.New("Unexpected error in accounts row!")
 	}

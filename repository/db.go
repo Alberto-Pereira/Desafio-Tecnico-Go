@@ -16,21 +16,25 @@ const (
 )
 
 func StartDB() *sql.DB {
+
 	// psqlInfo := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", user, password, user, port, dbname) // DOCKER
 
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%d dbname=%s sslmode=disable", host, port, user, password, dbname)
+	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%d dbname=%s sslmode=disable",
+		host, port, user, password, dbname) // LOCAL
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		fmt.Println("Erro ao abrir conexão com banco de dados", err)
+		fmt.Println("Error opening database connection!", err)
+		return nil
 	}
 
 	err = db.Ping()
 	if err != nil {
-		fmt.Println("Erro ao verificar se a conexão com o banco de dados ainda está ativa", err)
+		fmt.Println("Error checking if database connection is still active!", err)
+		return nil
 	}
 
-	fmt.Println("Banco de dados conectado!")
+	fmt.Println("Database connected!")
 
 	return db
 }

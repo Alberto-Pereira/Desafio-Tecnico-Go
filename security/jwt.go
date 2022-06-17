@@ -26,7 +26,6 @@ func GenerateToken(accountId int) (string, int, error) {
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 	signedToken, err := token.SignedString(jwtKey)
-
 	if err != nil {
 		return "", 0, errors.New("Error while try to create token!")
 	}
@@ -41,7 +40,6 @@ func ValidateToken(token string) (int, error) {
 	tkn, err := jwt.ParseWithClaims(token, claims, func(t *jwt.Token) (interface{}, error) {
 		return jwtKey, nil
 	})
-
 	if err != nil || !tkn.Valid {
 		return 0, errors.New("Invalid token!")
 	}

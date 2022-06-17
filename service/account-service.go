@@ -14,7 +14,6 @@ import (
 func ReadAccounts() ([]model.Account, error) {
 
 	accounts, err := repository.ReadAccounts()
-
 	if err != nil {
 		return nil, err
 	}
@@ -25,7 +24,6 @@ func ReadAccounts() ([]model.Account, error) {
 func ReadAccountBalance(accountId int) (int, error) {
 
 	accountBalance, err := repository.ReadAccountBalance(accountId)
-
 	if err != nil {
 		return 0, err
 	}
@@ -36,19 +34,16 @@ func ReadAccountBalance(accountId int) (int, error) {
 func CreateAccount(account model.Account) error {
 
 	err := validateAccount(account)
-
 	if err != nil {
 		return fmt.Errorf("Error validating account! %s", err.Error())
 	}
 
 	err = checkAccountCpf(account.CPF)
-
 	if err != nil {
 		return err
 	}
 
 	hashSecret, err := hashAccountSecret(account.Secret)
-
 	if err != nil {
 		return err
 	}
@@ -56,7 +51,6 @@ func CreateAccount(account model.Account) error {
 	err = repository.CreateAccount(model.Account{
 		Name: account.Name, CPF: account.CPF, Secret: hashSecret,
 		Balance: account.Balance, Created_at: int(time.Now().Unix())})
-
 	if err != nil {
 		return err
 	}
@@ -95,7 +89,6 @@ func validateAccount(account model.Account) error {
 func checkAccountCpf(accountCpf string) error {
 
 	isAccountCreated, err := repository.ReadAccountCpf(accountCpf)
-
 	if err != nil {
 		return err
 	}
@@ -110,13 +103,11 @@ func checkAccountCpf(accountCpf string) error {
 func hashAccountSecret(accountSecret string) (string, error) {
 
 	hashSecret, err := bcrypt.GenerateFromPassword([]byte(accountSecret), 14)
-
 	if err != nil {
 		return "", errors.New("Error while try to hash account secret!")
 	}
 
 	err = checkAccountSecretHash(accountSecret, string(hashSecret))
-
 	if err != nil {
 		return "", errors.New("Error while try to check if account secret and account secret hash matches!")
 	}
@@ -134,19 +125,16 @@ func checkAccountSecretHash(accountSecret string, hashSecret string) error {
 func ReadAccount(login model.Login) (int, error) {
 
 	err := validateCpfAndSecret(login)
-
 	if err != nil {
 		return 0, err
 	}
 
 	accountId, accountSecretHash, err := repository.ReadAccount(login.CPF)
-
 	if err != nil {
 		return 0, err
 	}
 
 	err = checkAccountSecretHash(login.Secret, accountSecretHash)
-
 	if err != nil {
 		return 0, errors.New("Incorrect account secret!")
 	}
