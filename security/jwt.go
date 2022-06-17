@@ -1,3 +1,4 @@
+// Security package contains the files for application security
 package security
 
 import (
@@ -9,11 +10,16 @@ import (
 
 var jwtKey = []byte("desafio-tecnico-go")
 
+// Custom standard claims with account id
 type Claims struct {
 	AccountID int `json:"account_origin_id"`
 	jwt.StandardClaims
 }
 
+// Generate Token
+// Receives an account id and generates a token
+// If the operation is successful, returns the signed token, an expiration time and nil
+// If the operation fails, returns "", 0 and an error
 func GenerateToken(accountId int) (string, int, error) {
 
 	expirationTime := time.Now().Add(time.Minute * 5).Unix()
@@ -33,6 +39,10 @@ func GenerateToken(accountId int) (string, int, error) {
 	return signedToken, int(expirationTime), nil
 }
 
+// Validate Token
+// Receives a token and validates
+// If the operation is successful, returns an account id and nil
+// If the operation fails, returns 0 and an error
 func ValidateToken(token string) (int, error) {
 
 	claims := &Claims{}
