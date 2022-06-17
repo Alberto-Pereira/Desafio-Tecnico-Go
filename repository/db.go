@@ -1,3 +1,5 @@
+// Repository package contains repository operations
+// for account and transfer models
 package repository
 
 import (
@@ -15,6 +17,10 @@ const (
 	dbname   = "desafiotecnico"
 )
 
+// Start DB
+// Initialize the database
+// If the operation is successful, returns the connected database
+// If the operation fails, returns nil
 func StartDB() *sql.DB {
 
 	// psqlInfo := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", user, password, user, port, dbname) // DOCKER

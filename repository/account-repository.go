@@ -1,3 +1,5 @@
+// Repository package contains repository operations
+// for account and transfer models
 package repository
 
 import (
@@ -5,6 +7,10 @@ import (
 	"errors"
 )
 
+// Create Account
+// Receives an account and insert into the database
+// If the operation is successful, returns nil
+// If the operation fails, returns an error
 func CreateAccount(account model.Account) error {
 
 	db := StartDB()
@@ -22,6 +28,10 @@ func CreateAccount(account model.Account) error {
 	return nil
 }
 
+// Read Account
+// Receives an account cpf and searches for the account id and secret
+// If the operation is successful, returns the account id, secret and nil
+// If the operation fails, returns 0, "" and an error
 func ReadAccount(accountCpf string) (int, string, error) {
 
 	db := StartDB()
@@ -39,6 +49,10 @@ func ReadAccount(accountCpf string) (int, string, error) {
 	return accId, accSecret, nil
 }
 
+// Read Account Id
+// Receives an account id and search for the account id
+// If the operation is successful, returns nil
+// If the operation fails, returns an error
 func ReadAccountId(accountId int) error {
 
 	db := StartDB()
@@ -55,6 +69,11 @@ func ReadAccountId(accountId int) error {
 	return nil
 }
 
+// Read Account Cpf
+// Receives an account cpf and verify if the account cpf exists
+// If the operation is successful, returns false and nil for non existing cpf
+// and true and nil for existing cpf
+// If the operation fails, returns false and an error
 func ReadAccountCpf(accountCpf string) (bool, error) {
 
 	db := StartDB()
@@ -75,6 +94,10 @@ func ReadAccountCpf(accountCpf string) (bool, error) {
 	return true, nil
 }
 
+// Read Account Balance
+// Receives an account id and search for the account balance
+// If the operation is successful, returns the account balance and nil
+// If the operation fails, returns 0 and an error
 func ReadAccountBalance(accountId int) (int, error) {
 
 	db := StartDB()
@@ -96,6 +119,10 @@ func ReadAccountBalance(accountId int) (int, error) {
 	return accountBalance, nil
 }
 
+// Read Accounts
+// Searches for all the accounts into the database
+// If the operation is successful, returns the accounts and nil
+// If the operation fails, returns nil and and an error
 func ReadAccounts() ([]model.Account, error) {
 
 	db := StartDB()
@@ -128,6 +155,10 @@ func ReadAccounts() ([]model.Account, error) {
 	return accounts, nil
 }
 
+// Update Account Balance
+// Receives an account id and new balance value and updates the account
+// If the operation is successful, returns nil
+// If the operation fails, returns an error
 func UpdateAccountBalance(accountId int, accountBalance int) error {
 
 	db := StartDB()

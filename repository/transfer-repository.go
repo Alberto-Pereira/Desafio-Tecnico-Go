@@ -1,3 +1,5 @@
+// Repository package contains repository operations
+// for account and transfer models
 package repository
 
 import (
@@ -5,6 +7,10 @@ import (
 	"errors"
 )
 
+// Create Transfer
+// Receives a transfer and insert into the database
+// If the operation is successful, returns nil
+// If the operation fails, returns an error
 func CreateTransfer(transfer model.Transfer) error {
 
 	db := StartDB()
@@ -24,6 +30,10 @@ func CreateTransfer(transfer model.Transfer) error {
 	return nil
 }
 
+// Read Transfers
+// Receives an account id and searches for all the transfers of that account
+// If the operation is successful, returns the transfers and nil
+// If the operation fails, returns nil and and an error
 func ReadTransfers(accountId int) ([]model.Transfer, error) {
 
 	db := StartDB()

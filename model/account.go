@@ -1,6 +1,7 @@
 // Model package contains the entities of the application
 package model
 
+// Account is formed by id, name, cpf, secret, balance and creation time
 type Account struct {
 	ID         int    `json:"id"`
 	Name       string `json:"name"`
