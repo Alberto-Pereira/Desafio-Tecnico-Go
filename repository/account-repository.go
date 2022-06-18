@@ -71,10 +71,9 @@ func ReadAccountId(accountId int) error {
 
 // Read Account Cpf
 // Receives an account cpf and verify if the account cpf exists
-// If the operation is successful, returns false and nil for non existing cpf
-// and true and nil for existing cpf
-// If the operation fails, returns false and an error
-func ReadAccountCpf(accountCpf string) (bool, error) {
+// If the operation is successful, returns nil for an existing cpf
+// If the operation fails, returns an error for a non  existing cpf or error
+func ReadAccountCpf(accountCpf string) error {
 
 	db := StartDB()
 
@@ -83,15 +82,11 @@ func ReadAccountCpf(accountCpf string) (bool, error) {
 	var accCpf string
 
 	err := db.QueryRow(sqlStatement, accountCpf).Scan(&accCpf)
-	if err != nil && accCpf != "" {
-		return false, errors.New("Error while try to search for account cpf!")
+	if err != nil {
+		return errors.New("Error while try to search for account cpf!")
 	}
 
-	if accCpf == "" {
-		return false, nil
-	}
-
-	return true, nil
+	return nil
 }
 
 // Read Account Balance
@@ -108,12 +103,8 @@ func ReadAccountBalance(accountId int) (int, error) {
 	var accId int
 
 	err := db.QueryRow(sqlStatement, accountId).Scan(&accId, &accountBalance)
-	if accountId != accId {
-		return 0, errors.New("This account doesn't exist!")
-	}
-
 	if err != nil {
-		return 0, errors.New("Error while try to retrieve balance from account!")
+		return 0, errors.New("This account doesn't exist!")
 	}
 
 	return accountBalance, nil
@@ -131,7 +122,7 @@ func ReadAccounts() ([]model.Account, error) {
 						FROM desafiotecnicoprincipal.accounts;`
 
 	rows, err := db.Query(sqlStatement)
-	if err != nil {
+	if err != nil || rows.Next() == false {
 		return nil, errors.New("Error while try to read accounts!")
 	}
 

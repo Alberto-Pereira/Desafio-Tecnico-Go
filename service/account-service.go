@@ -134,13 +134,9 @@ func validateAccount(account model.Account) error {
 // If the operation fails or the cpf exists, returns an error
 func checkAccountCpf(accountCpf string) error {
 
-	isAccountCreated, err := repository.ReadAccountCpf(accountCpf)
+	err := repository.ReadAccountCpf(accountCpf)
 	if err != nil {
 		return err
-	}
-
-	if isAccountCreated {
-		return errors.New("Account already created!")
 	}
 
 	return nil

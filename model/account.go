@@ -3,7 +3,7 @@ package model
 
 // Account is formed by id, name, cpf, secret, balance and creation time
 type Account struct {
-	ID         int    `json:"id"`
+	ID         int    `json:"id" `
 	Name       string `json:"name"`
 	CPF        string `json:"cpf"`
 	Secret     string `json:"secret"`

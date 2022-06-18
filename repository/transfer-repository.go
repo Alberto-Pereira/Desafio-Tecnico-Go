@@ -42,7 +42,7 @@ func ReadTransfers(accountId int) ([]model.Transfer, error) {
 		FROM desafiotecnicoprincipal.transfers WHERE account_origin_id=$1;`
 
 	rows, err := db.Query(sqlStatement, accountId)
-	if err != nil {
+	if err != nil || !rows.Next() {
 		return nil, errors.New("Error while try to read transfers!")
 	}
 
