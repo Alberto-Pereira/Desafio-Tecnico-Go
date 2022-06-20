@@ -122,7 +122,7 @@ func ReadAccounts() ([]model.Account, error) {
 						FROM desafiotecnicoprincipal.accounts;`
 
 	rows, err := db.Query(sqlStatement)
-	if err != nil || rows.Next() == false {
+	if err != nil {
 		return nil, errors.New("Error while try to read accounts!")
 	}
 	defer rows.Close()
@@ -142,6 +142,10 @@ func ReadAccounts() ([]model.Account, error) {
 	err = rows.Err()
 	if err != nil {
 		return nil, errors.New("Unexpected error in accounts row!")
+	}
+
+	if len(accounts) == 0 {
+		return nil, errors.New("No accounts registred!")
 	}
 
 	return accounts, nil

@@ -84,9 +84,14 @@ func validateTransfer(accountOriginId int, accountDestinationId int, amount int)
 		return errors.New("Invalid amount to transfer!")
 	}
 
-	err := repository.ReadAccountId(accountDestinationId)
+	err := repository.ReadAccountId(accountOriginId)
 	if err != nil {
-		return err
+		return errors.New("Account origin not found!")
+	}
+
+	err = repository.ReadAccountId(accountDestinationId)
+	if err != nil {
+		return errors.New("Account destination not found!")
 	}
 
 	return nil

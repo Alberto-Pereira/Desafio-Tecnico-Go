@@ -33,7 +33,7 @@ func CreateTransfer(ctx *gin.Context) {
 
 	err = service.CreateTransfer(token, transfer.Account_destination_id, transfer.Amount)
 	if err != nil {
-		ctx.JSON(500, err.Error())
+		ctx.JSON(400, err.Error())
 		return
 	}
 

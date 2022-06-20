@@ -176,7 +176,7 @@ func TestReadAccounts_NonExistingAccounts(t *testing.T) {
 	accounts, err := ReadAccounts()
 
 	assertions.Empty(accounts)
-	assertions.Equal(err.Error(), "Error while try to read accounts!")
+	assertions.Equal(err.Error(), "No accounts registred!")
 }
 
 // Update Account Balance

@@ -43,7 +43,7 @@ func ReadAccountBalance(ctx *gin.Context) {
 
 	accId, err := strconv.Atoi(accountId)
 	if err != nil || accId <= 0 {
-		ctx.JSON(500, "Invalid account id!")
+		ctx.JSON(400, "Invalid account id!")
 		return
 	}
 
@@ -66,7 +66,7 @@ func ReadAccounts(ctx *gin.Context) {
 
 	accounts, err := service.ReadAccounts()
 	if err != nil {
-		ctx.JSON(500, err.Error())
+		ctx.JSON(404, err.Error())
 		return
 	}
 

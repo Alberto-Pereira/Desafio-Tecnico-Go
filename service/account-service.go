@@ -6,7 +6,6 @@ import (
 	"desafio-tecnico/model"
 	"desafio-tecnico/repository"
 	"errors"
-	"fmt"
 	"regexp"
 	"time"
 
@@ -21,7 +20,7 @@ func CreateAccount(account model.Account) error {
 
 	err := validateAccount(account)
 	if err != nil {
-		return fmt.Errorf("Error validating account! %s", err.Error())
+		return errors.New("Error validating account!")
 	}
 
 	isAccountCreated, err := isAccountCreated(account.CPF)
