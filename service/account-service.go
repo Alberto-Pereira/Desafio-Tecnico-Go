@@ -24,8 +24,8 @@ func CreateAccount(account model.Account) error {
 		return fmt.Errorf("Error validating account! %s", err.Error())
 	}
 
-	err = checkAccountCpf(account.CPF)
-	if err != nil {
+	isAccountCreated, err := isAccountCreated(account.CPF)
+	if isAccountCreated {
 		return err
 	}
 
@@ -130,16 +130,16 @@ func validateAccount(account model.Account) error {
 
 // Check Account Cpf
 // Receives an account cpf and search for that cpf
-// If there's no cpf, returns nil
-// If the operation fails or the cpf exists, returns an error
-func checkAccountCpf(accountCpf string) error {
+// If there's no cpf, returns false and nil
+// If the operation fails or the cpf exists, returns true and an error
+func isAccountCreated(accountCpf string) (bool, error) {
 
 	err := repository.ReadAccountCpf(accountCpf)
 	if err != nil {
-		return err
+		return false, nil
 	}
 
-	return nil
+	return true, errors.New("Account already created!")
 }
 
 // Hash Account Secret

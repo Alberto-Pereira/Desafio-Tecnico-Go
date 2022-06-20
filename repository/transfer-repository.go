@@ -42,9 +42,10 @@ func ReadTransfers(accountId int) ([]model.Transfer, error) {
 		FROM desafiotecnicoprincipal.transfers WHERE account_origin_id=$1;`
 
 	rows, err := db.Query(sqlStatement, accountId)
-	if err != nil || !rows.Next() {
+	if err != nil {
 		return nil, errors.New("Error while try to read transfers!")
 	}
+	defer rows.Close()
 
 	var transfer model.Transfer
 	var transfers []model.Transfer
@@ -62,6 +63,10 @@ func ReadTransfers(accountId int) ([]model.Transfer, error) {
 	err = rows.Err()
 	if err != nil {
 		return nil, errors.New("Unexpected error in accounts row!")
+	}
+
+	if len(transfers) == 0 {
+		return nil, errors.New("This account doesn't have transfers!")
 	}
 
 	return transfers, nil

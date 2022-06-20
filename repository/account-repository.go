@@ -72,7 +72,7 @@ func ReadAccountId(accountId int) error {
 // Read Account Cpf
 // Receives an account cpf and verify if the account cpf exists
 // If the operation is successful, returns nil for an existing cpf
-// If the operation fails, returns an error for a non  existing cpf or error
+// If the operation fails, returns an error for a non existing cpf or error
 func ReadAccountCpf(accountCpf string) error {
 
 	db := StartDB()
@@ -125,6 +125,7 @@ func ReadAccounts() ([]model.Account, error) {
 	if err != nil || rows.Next() == false {
 		return nil, errors.New("Error while try to read accounts!")
 	}
+	defer rows.Close()
 
 	var account model.Account
 	var accounts []model.Account

@@ -42,7 +42,7 @@ func TestCreateTransfer_InvalidTransfer(t *testing.T) {
 
 // Read Transfers
 // Valid Account - Read transfers for a valid account
-func TestCreateTransfer_ValidAccount(t *testing.T) {
+func TestReadTransfers_ValidAccount(t *testing.T) {
 
 	assertions := require.New(t)
 
@@ -56,14 +56,14 @@ func TestCreateTransfer_ValidAccount(t *testing.T) {
 
 // Read Transfers
 // Invalid Account - Try to read transfers for an invalid account
-func TestCreateTransfer_InvalidAccount(t *testing.T) {
+func TestReadTransfers_InvalidAccount(t *testing.T) {
 
 	assertions := require.New(t)
 
-	invalidAccountId := 0
+	invalidAccountId := 999
 
 	transfers, err := ReadTransfers(invalidAccountId)
 
 	assertions.Empty(transfers)
-	assertions.Equal(err.Error(), "Error while try to read transfers!")
+	assertions.Equal(err.Error(), "This account doesn't have transfers!")
 }

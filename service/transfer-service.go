@@ -57,13 +57,14 @@ func ReadTransfers(token string) ([]model.Transfer, error) {
 		return nil, err
 	}
 
-	transfers, err := repository.ReadTransfers(accountId)
+	err = repository.ReadAccountId(accountId)
 	if err != nil {
 		return nil, err
 	}
 
-	if transfers == nil {
-		return nil, errors.New("This account doesn't have transfers!")
+	transfers, err := repository.ReadTransfers(accountId)
+	if err != nil {
+		return nil, err
 	}
 
 	return transfers, nil
@@ -106,11 +107,11 @@ func validateAccountBalance(accountOriginId int, amount int) (int, error) {
 	amt := float64(amount)
 
 	if accountOriginBalance <= 0 {
-		return 0, fmt.Errorf("Invalid account balance! You have %2.f", accBalance/100)
+		return 0, fmt.Errorf("Invalid account balance! You have %.2f", accBalance/100)
 	}
 
 	if accountOriginBalance < amount {
-		return 0, fmt.Errorf("Invalid amount to transfer! You have %2.f and wants to transfer %2.f", accBalance/100, amt/100)
+		return 0, fmt.Errorf("Invalid amount to transfer! You have %.2f and wants to transfer %.2f", accBalance/100, amt/100)
 	}
 
 	return accountOriginBalance, nil

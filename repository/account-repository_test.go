@@ -15,7 +15,7 @@ func TestCreateAccount_ValidAccount(t *testing.T) {
 
 	// ! Cpf needs to be change before every test after the first test
 	validAccount := model.Account{
-		Name: "Test User", CPF: "123.123.123-00", Secret: "TEST!TEST!TEST!", Balance: 10000, Created_at: 1655361423}
+		Name: "Test User", CPF: "773.123.123-00", Secret: "TEST!TEST!TEST!", Balance: 1, Created_at: 1655361423}
 
 	err := CreateAccount(validAccount)
 
@@ -39,6 +39,7 @@ func TestCreateAccount_InvalidAccount(t *testing.T) {
 
 	for _, invalidAcc := range invalidAccount {
 		err := CreateAccount(invalidAcc)
+
 		assertions.Equal(err.Error(), "Error while try to create account!")
 	}
 }
