@@ -5,14 +5,13 @@
 - [About](#about)
 - [Hierarchy](#pattern)
 - [Dependencies](#dep)
-- [How to Download](#howtodownload)
-- [How to Use](#howtouse)
+- [How to Use](#howtodownload)
 - [License](#license)
 - [Author](#author)
 
 ## 💻 About: <a name="about"></a>
 
-- A aplicação divide o valor total resultante de uma lista de compras em uma lista de emails.
+- The API allows to create an account, make login, transfer amount between accounts, see how many accounts are registered in database and a balance of this accounts.
 
 ## 🏛 Hierarchy: <a name="pattern"></a>
 
@@ -26,7 +25,7 @@
 - Testify: <a href="https://github.com/stretchr/testify">github.com/stretchr/testify</a>
 - Randstr: <a href="https://github.com/thanhpk/randstr">github.com/thanhpk/randstr</a>
 
-## 🐳 How to Download: <a name="howtodownload"></a>
+## 🐳 How to Use: <a name="howtodownload"></a>
 ⚠ Ter o <a href="https://www.docker.com/products/docker-desktop/">Docker</a> instalado.
 - Clonar o repositório:
 ```bash
