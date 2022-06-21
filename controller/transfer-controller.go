@@ -56,7 +56,7 @@ func CreateTransfer(ctx *gin.Context) {
 // If the operation fails, returns one failure code and message
 // Read Transfers godoc
 // @Summary Read transfers from a logged account
-// @Description Returns transfers
+// @Description Needs to be logged. Returns transfers
 // @Tags Transfer
 // @Accept application/json
 // @Produce application/json

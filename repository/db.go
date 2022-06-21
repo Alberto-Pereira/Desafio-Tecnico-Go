@@ -24,10 +24,7 @@ const (
 // If the operation fails, returns nil
 func StartDB() *sql.DB {
 
-	// psqlInfo := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", user, password, user, port, dbname) // DOCKER
-
-	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%d dbname=%s sslmode=disable",
-		host, port, user, password, dbname) // LOCAL
+	psqlInfo := fmt.Sprintf("postgres://%v:%v@%v:%v/%v?sslmode=disable", user, password, user, port, dbname) // DOCKER
 
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {

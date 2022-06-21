@@ -189,7 +189,7 @@ const docTemplate = `{
         },
         "/transfers/": {
             "get": {
-                "description": "Returns transfers",
+                "description": "Needs to be logged. Returns transfers",
                 "consumes": [
                     "application/json"
                 ],

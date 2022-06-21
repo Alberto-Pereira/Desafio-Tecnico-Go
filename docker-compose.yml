@@ -1,0 +1,32 @@
+
+# Docker Compose Version
+version: "3.9"
+
+# Services
+services:
+  # Postgres DB
+  db:
+    container_name: postgres
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123
+      POSTGRES_DB: desafiotecnico
+    ports:
+      - "5000:5432"
+    # SQL scripts folder to be executed
+    volumes: 
+      - ./scripts:/docker-entrypoint-initdb.d
+
+  # API
+  go:
+    container_name: go
+    # Make a build using the Dockerfile
+    build:
+      context: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "db"
+    links: 
+      - "db"

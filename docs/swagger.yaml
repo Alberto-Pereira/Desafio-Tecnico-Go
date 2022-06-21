@@ -161,7 +161,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Returns transfers
+      description: Needs to be logged. Returns transfers
       produces:
       - application/json
       responses:
