@@ -3,9 +3,9 @@
 ## 📝 Summary
 
 - [About](#about)
-- [Hierarchy](#pattern)
+- [Composition](#composition)
 - [Dependencies](#dep)
-- [How to Use](#howtodownload)
+- [How to Use](#howtouse)
 - [License](#license)
 - [Author](#author)
 
@@ -13,36 +13,49 @@
 
 - The API allows to create an account, make login, transfer amount between accounts, see how many accounts are registered in database and a balance of this accounts.
 
-## 🏛 Hierarchy: <a name="pattern"></a>
+## 🏛 Composition: <a name="composition"></a>
 
-- A aplicação é composta das seguintes partes:
-    - model: contém o arquivo <b>item.go</b>, que representa a entidade principal da aplicação.
-    - service: contém o arquivo <b>item-service.go</b>, que contém as regras de serviço da entidade item.
-    - util: contém os arquivos <b>gerador-de-emails.go</b> e <b>gerador-de-itens.go</b>, que auxiliam na criação de testes/casos para a aplicação.
+The API is divided by two main parts:
+  
+  - Account:
+    - Create account.
+    - Get account balance.
+    - Get accounts.
+    - Login.
+    
+  - Transfer: 
+    - Create transfer.
+    - Get transfers.
 
 ## 🌴 Dependencies: <a name="dep"></a>
 
-- Testify: <a href="https://github.com/stretchr/testify">github.com/stretchr/testify</a>
-- Randstr: <a href="https://github.com/thanhpk/randstr">github.com/thanhpk/randstr</a>
+- Swagger (API Documentation): <a href="https://github.com/swaggo">github.com/swaggo</a>
+- Gin Gonic (HTTP): <a href="https://github.com/gin-gonic/gin">github.com/gin-gonic/gin</a>
+- JWT (Security): <a href="https://github.com/golang-jwt/jwt">github.com/golang-jwt/jwt</a>
+- BCrypt (Hash): <a href="https://golang.org/x/crypto">golang.org/x/crypto</a>
+- PQ (PostgreSQL): <a href="https://github.com/lib/pq">github.com/lib/pq</a>
+- Testify (Tests): <a href="https://github.com/stretchr/testify">github.com/stretchr/testify</a>
 
-## 🐳 How to Use: <a name="howtodownload"></a>
-⚠ Ter o <a href="https://www.docker.com/products/docker-desktop/">Docker</a> instalado.
-- Clonar o repositório:
+## 🐳 How to Use: <a name="howtouse"></a>
+⚠ Have <a href="https://www.docker.com/products/docker-desktop/">Docker</a> installed.
+- Clone the repository:
 ```bash
-git clone https://github.com/Alberto-Pereira/Desafio-Tecnico.git
+git clone https://github.com/Alberto-Pereira/desafio-tecnico-go
 ```
-- Acessar o diretório clonado:
+- Access the cloned directory:
 ```bash
-cd Desafio-Tecnico
+cd desafio-tecnico-go
 ```
-- Fazer a build da aplicação:
+- Build the API:
 ```bash
-docker build -t docker-desafio-tecnico .
+docker-compose build
 ```
-- Iniciar a aplicação:
+- Start the API:
 ```bash
-docker run docker-desafio-tecnico
+docker-compose up
 ```
+
+👉 After started you can use the API with <a href="http://localhost:8080/swagger/index.html">Swagger</a>.
 
 ## 📃 License: <a name="license"></a>
 
