@@ -15,6 +15,18 @@ import (
 // search for an account that matches the login and generate a token
 // If the operation is successful, set the token in the cookie then returns one success code and message
 // If the operation fails, returns one failure code and message
+// Login godoc
+// @Summary Loggin an account
+// @Description Returns a message associated with the operation
+// @Tags Login
+// @Accept application/json
+// @Produce application/json
+// @Param login body model.Login true "Note: cpf(Ex.: 000.000.000-00) and secret"
+// @Success 200 {string} message
+// @Failure 400 {string} message
+// @Failure 404 {string} message
+// @Failure 500 {string} message
+// @Router /login/ [post]
 func Login(ctx *gin.Context) {
 
 	var login model.Login

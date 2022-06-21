@@ -15,6 +15,16 @@ import (
 // then send to the service
 // If the operation is successful, returns one success code and message
 // If the operation fails, returns one failure code and message
+// Create Transfer godoc
+// @Summary Create a transfer
+// @Description Needs to be logged before transfer. Returns a message associated with the operation
+// @Tags Transfer
+// @Accept application/json
+// @Produce application/json
+// @Param account body model.Transfer true "Only account_destination_id and amount(Note: Value in cents greater or equal to 1)"
+// @Success 200 {string} message
+// @Failure 400 {string} message
+// @Router /transfers/ [post]
 func CreateTransfer(ctx *gin.Context) {
 
 	token, err := getTokenFromCookie(ctx)
@@ -44,6 +54,16 @@ func CreateTransfer(ctx *gin.Context) {
 // Receives an account id through a token from cookie and search for all transfers of that account
 // If the operation is successful, returns one success code and the transfers of that account
 // If the operation fails, returns one failure code and message
+// Read Transfers godoc
+// @Summary Read transfers from a logged account
+// @Description Returns transfers
+// @Tags Transfer
+// @Accept application/json
+// @Produce application/json
+// @Success 200 {string} []model.Transfers
+// @Failure 400 {string} message
+// @Failure 404 {string} message
+// @Router /transfers/ [get]
 func ReadTransfers(ctx *gin.Context) {
 
 	token, err := getTokenFromCookie(ctx)

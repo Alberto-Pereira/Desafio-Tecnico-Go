@@ -1,0 +1,210 @@
+basePath: /
+definitions:
+  model.Account:
+    properties:
+      balance:
+        type: integer
+      cpf:
+        type: string
+      created_at:
+        type: integer
+      id:
+        type: integer
+      name:
+        type: string
+      secret:
+        type: string
+    type: object
+  model.Login:
+    properties:
+      cpf:
+        type: string
+      secret:
+        type: string
+    type: object
+  model.Transfer:
+    properties:
+      account_destination_id:
+        type: integer
+      account_origin_id:
+        type: integer
+      amount:
+        type: integer
+      created_at:
+        type: integer
+      id:
+        type: integer
+    type: object
+host: localhost:8080
+info:
+  contact:
+    email: alberto.pereira.dev@gmail.com
+    name: Desafio Técnico GO Support
+    url: https://github.com/Alberto-Pereira/desafio-tecnico-go
+  description: API for transfer between internal accounts of a digital bank
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Desafio Técnico GO
+  version: "1.0"
+paths:
+  /accounts/:
+    get:
+      consumes:
+      - application/json
+      description: Returns accounts
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Read accounts registred in database
+      tags:
+      - Account
+    post:
+      consumes:
+      - application/json
+      description: Returns a message associated with the operation
+      parameters:
+      - description: 'Only name(Ex.: Name), cpf(Ex.: 000.000.000-00), secret(Note:
+          Anything but whitespace) and balance(Note: Value in cents greater or equal
+          to 0) '
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/model.Account'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create an account
+      tags:
+      - Account
+  /accounts/{account_id}/balance:
+    get:
+      consumes:
+      - application/json
+      description: Returns an account balance
+      parameters:
+      - description: Inform the account id
+        in: path
+        name: account_id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Read a balance from an account
+      tags:
+      - Account
+  /login/:
+    post:
+      consumes:
+      - application/json
+      description: Returns a message associated with the operation
+      parameters:
+      - description: 'Note: cpf(Ex.: 000.000.000-00) and secret'
+        in: body
+        name: login
+        required: true
+        schema:
+          $ref: '#/definitions/model.Login'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+        "500":
+          description: Internal Server Error
+          schema:
+            type: string
+      summary: Loggin an account
+      tags:
+      - Login
+  /transfers/:
+    get:
+      consumes:
+      - application/json
+      description: Returns transfers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+        "404":
+          description: Not Found
+          schema:
+            type: string
+      summary: Read transfers from a logged account
+      tags:
+      - Transfer
+    post:
+      consumes:
+      - application/json
+      description: Needs to be logged before transfer. Returns a message associated
+        with the operation
+      parameters:
+      - description: 'Only account_destination_id and amount(Note: Value in cents
+          greater or equal to 1)'
+        in: body
+        name: account
+        required: true
+        schema:
+          $ref: '#/definitions/model.Transfer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+        "400":
+          description: Bad Request
+          schema:
+            type: string
+      summary: Create a transfer
+      tags:
+      - Transfer
+swagger: "2.0"
